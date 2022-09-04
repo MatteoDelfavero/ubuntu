@@ -13,12 +13,19 @@ go install github.com/schachmat/wego@latest
 
 #setup wego
 /home/$USER/gocode/bin/wego
-sed -i 's/location=40.748,-73.985/location=Dorog/' /home/$USER/.wegorc
-sed -i 's/owm-api-key=/owm-api-key=c4b0ce26404190e1c66c88d5c9f80c66/' /home/$USER/.wegorc
-sed -i 's/backend=forecast.io/backend=openweathermap/' /home/$USER/.wegorc
-sed -i 's/owm-lang=en/owm-lang=hu/' /home/$USER/.wegorc
+sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/$USER/.wegorc
+sudo sed -i 's/owm-api-key=/owm-api-key=c4b0ce26404190e1c66c88d5c9f80c66/' /home/$USER/.wegorc
+sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/$USER/.wegorc
+sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/$USER/.wegorc
 /home/$USER/gocode/bin/wego
 
 #make startup script
-echo '#!/bin/bash' > /etc/profile.d/startup.sh
-echo -e "clear\n/home/$USER/gocode/bin/wego\nneofetch" >> /etc/profile.d/startup.sh
+sudo echo '#!/bin/bash' > /etc/profile.d/startup.sh
+sudo echo -e "clear\n/home/$USER/gocode/bin/wego\nneofetch" >> /etc/profile.d/startup.sh
+
+#install supervisor
+sudo nala install supervisor -y
+
+#upgrade
+sudo nala update
+sudo nala upgrade -y

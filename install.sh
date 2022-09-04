@@ -310,7 +310,7 @@ EOF
         77) reboot;;
         88) shutdown;;
         99) exit;;
-        *) echo "This choose is not available. Please choose a different one.";; 
+        *) echo "$choose This choose is not available. Please choose a different one.";; 
     esac
     menu
 }

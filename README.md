@@ -3,4 +3,4 @@ sudo wget -O - https://raw.githubusercontent.com/MatteoDelfavero/ubuntu/main/lin
 
 sudo wget -O - https://raw.githubusercontent.com/MatteoDelfavero/ubuntu/main/nala.sh | bash
 
-sudo wget -O - https://raw.githubusercontent.com/MatteoDelfavero/ubuntu/main/serever.sh | bash
+sudo wget -O - https://raw.githubusercontent.com/MatteoDelfavero/ubuntu/main/server.sh | bash

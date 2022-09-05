@@ -1,4 +1,9 @@
 
+# Ubuntu installer tool 📝  
+I'm lazy, so I made myself an automatic installer. This is useful after a fresh linux installation.
 
+## Install ✨
+sudo bash ./install.sh
 
-![alt text](https://prnt.sc/RqHTmlAumhNh)
+## Img 🖼️
+![img 1](https://github.com/MatteoDelfavero/ubuntu/blob/main/sample.png?raw=true)

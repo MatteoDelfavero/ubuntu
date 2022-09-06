@@ -38,7 +38,6 @@ app_install(){
     else
         sudo apt -y install "$app"
     fi
-if \[ "\$1" -eq 0 \]; then
     if [ "$2" -eq 1 ]; then
         menu
     fi

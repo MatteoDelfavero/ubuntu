@@ -49,9 +49,9 @@ wego() {
         go install github.com/schachmat/wego@latest
         /home/"$USERNAME"/gocode/bin/wego
         cp -f "$BASEDIR"/.wegorc /home/"$USERNAME"/.wegorc
-        # API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
+        API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
         # sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
-        sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
+        sudo sed -i "s/owm-api-key=CHANGETHIS/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
         # sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
         # sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
         /home/"$USERNAME"/gocode/bin/wego

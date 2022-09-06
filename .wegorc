@@ -36,7 +36,7 @@ jsn-no-indent=false
 location=Dorog
 
 # openweathermap backend: the api KEY to use (default )
-owm-api-key=c4b0ce26404190e1c66c88d5c9f80c66
+owm-api-key=CHANGETHIS
 
 # openweathermap backend: print raw requests and responses (default false)
 owm-debug=false

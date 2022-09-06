@@ -5,9 +5,14 @@
 Color_Off='\033[0m'       # Text Reset
 On_Red='\033[41m'         # Red
 
+if [ "$EUID" -eq 0 ];
+then
+  whiptail --title "Root privilage" --msgbox "Please do not start the program with root privileges." 8 78
+  exit
+fi
 
 BASEDIR=$(dirname "$0")
-USERNAME="$SUDO_USER"
+USERNAME="$USER"
 if ! (whiptail --title "Username" --yesno "Is this your username?\n""$USERNAME""" 8 78); then
     USERNAME=$(whiptail --title "User name" --inputbox "What is your username?" 10 60 3>&1 1>&2 2>&3)
 fi

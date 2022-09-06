@@ -1,10 +1,11 @@
 #!/bin/bash
 # https://www.xmodulo.com/create-dialog-boxes-interactive-shell-script.html
-#https://pagure.io/newt/blob/master/f/whiptail.c#_360
+# https://pagure.io/newt/blob/master/f/whiptail.c#_360
 
 Color_Off='\033[0m'       # Text Reset
 On_Red='\033[41m'         # Red
 
+sudo echo Hello
 if [ "$EUID" -eq 0 ];
 then
   whiptail --title "Root privilage" --msgbox "Please do not start the program with root privileges." 8 78
@@ -114,38 +115,40 @@ nala_install(){
 }
 
 startup(){
-    FILE=/etc/profile.d/startup.sh
-    if test -f "$FILE"; then
-        echo "$FILE exists."
-        read -p "startup.sh file is exist, remove the file?? " -n 1 -r
-        echo    # (optional) move to a new line
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-            sudo rm -r /etc/profile.d/startup.sh
-        else
-            return
-        fi
-    fi
-    sudo echo '#!/bin/bash' > /etc/profile.d/startup.sh
-    sudo echo 'clear' >> /etc/profile.d/startup.sh
+    # FILE=/etc/profile.d/startup.sh
+    cp -f "$BASEDIR"/startup.sh /etc/profile.d/startup.sh
 
-    if command -v "go" &> /dev/null
-    then
-        sudo echo "/home/""$USERNAME""/gocode/bin/wego" >> /etc/profile.d/startup.sh
-    fi
+    # if test -f "$FILE"; then
+    #     echo "$FILE exists."
+    #     read -p "startup.sh file is exist, remove the file?? " -n 1 -r
+    #     echo    # (optional) move to a new line
+    #     if [[ $REPLY =~ ^[Yy]$ ]]
+    #     then
+    #         sudo rm -r /etc/profile.d/startup.sh
+    #     else
+    #         return
+    #     fi
+    # fi
+    # sudo echo '#!/bin/bash' > /etc/profile.d/startup.sh
+    # sudo echo 'clear' >> /etc/profile.d/startup.sh
 
-    if ! command -v "neofetch" &> /dev/null
-    then
-        read -p "neofetch is not installed, want to install?? " -n 1 -r
-        echo    # (optional) move to a new line
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-            neofetch
-            sudo echo 'neofetch' >> /etc/profile.d/startup.sh
-        fi
-    else
-        sudo echo 'neofetch' >> /etc/profile.d/startup.sh
-    fi
+    # if command -v "go" &> /dev/null
+    # then
+    #     sudo echo "/home/""$USERNAME""/gocode/bin/wego" >> /etc/profile.d/startup.sh
+    # fi
+
+    # if ! command -v "neofetch" &> /dev/null
+    # then
+    #     read -p "neofetch is not installed, want to install?? " -n 1 -r
+    #     echo    # (optional) move to a new line
+    #     if [[ $REPLY =~ ^[Yy]$ ]]
+    #     then
+    #         neofetch
+    #         sudo echo 'neofetch' >> /etc/profile.d/startup.sh
+    #     fi
+    # else
+    #     sudo echo 'neofetch' >> /etc/profile.d/startup.sh
+    # fi
     if [ "$1" -eq 1 ]; then
         menu
     fi
@@ -334,6 +337,7 @@ c_autoinstall(){
         'app_install ranger 0' 'ranger (Console File Manager with VI Key Bindings)'
         'app_install bpytop 0' 'bpytop (Resource monitor)'
         'lsd_install 0' 'lsd (File manager)'
+        'apt_install mc 0' 'Midnight Commander (File manager)'
         'startup 0' 'Create a startup file (neofetch and wego)'
     )
 
@@ -387,9 +391,10 @@ menu(){
     "10" "Install ranger (Console File Manager with VI Key Bindings)" \
     "11" "Install bpytop (Resource monitor)" \
     "12" "Install lsd (File manager)" \
-    "13" "Create a startup file (neofetch and wego)" \
-    "14" "Update and upgrade" \
-    "15" "Update" \
+    "13" "Midnight Commander (File manager)" \
+    "14" "Create a startup file (neofetch and wego)" \
+    "15" "Update and upgrade" \
+    "16" "Update" \
     3>&1 1>&2 2>&3)
 
     exitstatus=$?
@@ -407,9 +412,10 @@ menu(){
             10) app_install ranger 1;;
             11) app_install bpytop 1;;
             12) lsd_install 1;;
-            13) startup 1;;
-            14) update_upgrade;;
-            15) _update;;
+            13) app_install mc 1;;
+            14) startup 1;;
+            15) update_upgrade;;
+            16) _update;;
         esac
     else
         echo

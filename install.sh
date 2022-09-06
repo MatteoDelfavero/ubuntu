@@ -218,22 +218,23 @@ neofetch_install(){
         mkdir "/home/""$USERNAME""/.config/neofetch"
     fi
 
-  
-    sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/cpu_display="off"/cpu_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/disk_subtitle="mount"/disk_subtitle="dir"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i "s/disk_show=('\/')/disk_show=('\/' '\/dev\/sda3')/" /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/de_version="on"/de_version="off"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/cpu_temp="off"/cpu_temp="C"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/speed_shorthand="off"/speed_shorthand="on"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/memory_unit="mib"/memory_unit="gib"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/memory_percent="off"/memory_percent="on"/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/info cols/\# info cols/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/\# info "Public IP" public_ip/info "Public IP" public_ip/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/\# info "Local IP" local_ip/info "Local IP" local_ip/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/\# info "Disk" disk/info "Disk" disk/' /home/"$USERNAME"/.config/neofetch/config.conf
-    sudo sed -i 's/info "Packages" packages/\# info "Packages" packages/' /home/"$USERNAME"/.config/neofetch/config.conf
+    cp "$BASEDIR"/neofetch_config.conf /home/"$USERNAME"/.config/neofetch/config.conf
+
+    # sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/cpu_display="off"/cpu_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/disk_subtitle="mount"/disk_subtitle="dir"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i "s/disk_show=('\/')/disk_show=('\/' '\/dev\/sda3')/" /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/de_version="on"/de_version="off"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/cpu_temp="off"/cpu_temp="C"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/speed_shorthand="off"/speed_shorthand="on"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/memory_unit="mib"/memory_unit="gib"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/memory_percent="off"/memory_percent="on"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/info cols/\# info cols/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/\# info "Public IP" public_ip/info "Public IP" public_ip/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/\# info "Local IP" local_ip/info "Local IP" local_ip/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/\# info "Disk" disk/info "Disk" disk/' /home/"$USERNAME"/.config/neofetch/config.conf
+    # sudo sed -i 's/info "Packages" packages/\# info "Packages" packages/' /home/"$USERNAME"/.config/neofetch/config.conf
     if [ "$1" -eq 1 ]; then
         menu
     fi

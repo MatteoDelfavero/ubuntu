@@ -133,7 +133,7 @@ startup(){
 
     if command -v "go" &> /dev/null
     then
-        sudo echo '/home/"$USERNAME"/gocode/bin/wego' >> /etc/profile.d/startup.sh
+        sudo echo "/home/""$USERNAME""/gocode/bin/wego" >> /etc/profile.d/startup.sh
     fi
 
     if ! command -v "neofetch" &> /dev/null

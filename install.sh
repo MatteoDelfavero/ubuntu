@@ -42,22 +42,21 @@ app_install(){
 
 wego() {
     {
-        echo 0
-        # app_install golang-go
-        # echo 30
-        # export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
-        # echo 35
-        # go install github.com/schachmat/wego@latest
-        # echo 45
-        # /home/"$USERNAME"/gocode/bin/wego
-        # echo 50
-        # API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
-        # sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
-        # sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
-        # sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
-        # sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
-        # echo 100
-        # /home/"$USERNAME"/gocode/bin/wego
+        app_install golang-go
+        echo 30
+        export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
+        echo 35
+        go install github.com/schachmat/wego@latest
+        echo 45
+        /home/"$USERNAME"/gocode/bin/wego
+        echo 50
+        API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
+        sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
+        sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
+        sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
+        sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
+        echo 100
+        /home/"$USERNAME"/gocode/bin/wego
     } | whiptail --gauge "Please wait while installing" 6 60 0
 
     menu

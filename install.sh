@@ -44,24 +44,17 @@ app_install(){
 }
 
 wego() {
-    {
         app_install golang-go 0
-        echo 30
         export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
-        echo 35
         go install github.com/schachmat/wego@latest
-        echo 45
         /home/"$USERNAME"/gocode/bin/wego
-        echo 50
-        API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
-        sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
+        cp -f "$BASEDIR"/.wegorc /home/"$USERNAME"/.wegorc
+        # API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
+        # sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
         sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
-        sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
-        sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
-        echo 100
+        # sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
+        # sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
         /home/"$USERNAME"/gocode/bin/wego
-
-    } | whiptail --gauge "Please wait while installing" 6 60 0
     if [ "$1" -eq 1 ]; then
         menu
     fi
@@ -218,7 +211,7 @@ neofetch_install(){
         mkdir "/home/""$USERNAME""/.config/neofetch"
     fi
 
-    cp "$BASEDIR"/neofetch_config.conf /home/"$USERNAME"/.config/neofetch/config.conf
+    cp -f "$BASEDIR"/neofetch_config.conf /home/"$USERNAME"/.config/neofetch/config.conf
 
     # sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
     # sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
@@ -279,7 +272,7 @@ lsd_install(){
         mkdir "$FILE"
     fi
 
-    cp "$BASEDIR"/LSD_config.yaml "$FILE"/config.yaml
+    cp -f "$BASEDIR"/LSD_config.yaml "$FILE"/config.yaml
 
     if [ ! -d /home/"$USERNAME"/.local/share/fonts/ ];
     then

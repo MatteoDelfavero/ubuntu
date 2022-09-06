@@ -8,9 +8,9 @@ On_Red='\033[41m'         # Red
 
 BASEDIR=$(dirname "$0")
 USERNAME="$SUDO_USER"
-# if ! (whiptail --title "Username" --yesno "Is this your username?\n""$USERNAME""" 8 78); then
-#     USERNAME=$(whiptail --title "User name" --inputbox "What is your username?" 10 60 3>&1 1>&2 2>&3)
-# fi
+if ! (whiptail --title "Username" --yesno "Is this your username?\n""$USERNAME""" 8 78); then
+    USERNAME=$(whiptail --title "User name" --inputbox "What is your username?" 10 60 3>&1 1>&2 2>&3)
+fi
 
 
 dialog_install(){

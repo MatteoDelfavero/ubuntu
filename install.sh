@@ -116,7 +116,7 @@ nala_install(){
 
 startup(){
     # FILE=/etc/profile.d/startup.sh
-    cp -f "$BASEDIR"/startup.sh /etc/profile.d/startup.sh
+    sudo cp -f "$BASEDIR"/startup.sh /etc/profile.d/startup.sh
 
     # if test -f "$FILE"; then
     #     echo "$FILE exists."

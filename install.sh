@@ -362,5 +362,4 @@ menu(){
 }
 
 dialog_install
-echo ${{ secrets.OW_API_KEY }}
-#menu
+menu

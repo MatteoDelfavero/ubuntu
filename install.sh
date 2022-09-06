@@ -214,7 +214,7 @@ neofetch_install(){
         mkdir "/home/""$USERNAME""/.config"
     fi
 
-    if [ -d "/home/""$USERNAME""/.config/neofetch" ]; then
+    if ! [ -d "/home/""$USERNAME""/.config/neofetch" ]; then
         mkdir "/home/""$USERNAME""/.config/neofetch"
     fi
 

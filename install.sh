@@ -210,7 +210,15 @@ edge(){
 
 neofetch_install(){
     app_install neofetch 0
-    neofetch
+    if ! [ -d "/home/""$USERNAME""/.config" ]; then
+        mkdir "/home/""$USERNAME""/.config"
+    fi
+
+    if [ -d "/home/""$USERNAME""/.config/neofetch" ]; then
+        mkdir "/home/""$USERNAME""/.config/neofetch"
+    fi
+
+  
     sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
     sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
     sudo sed -i 's/cpu_display="off"/cpu_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf

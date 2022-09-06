@@ -1,7 +1,17 @@
 #!/bin/bash
 # https://www.xmodulo.com/create-dialog-boxes-interactive-shell-script.html
+#https://pagure.io/newt/blob/master/f/whiptail.c#_360
+
+Color_Off='\033[0m'       # Text Reset
+On_Red='\033[41m'         # Red
+
 
 BASEDIR=$(dirname "$0")
+USERNAME="$SUDO_USER"
+# if ! (whiptail --title "Username" --yesno "Is this your username?\n""$USERNAME""" 8 78); then
+#     USERNAME=$(whiptail --title "User name" --inputbox "What is your username?" 10 60 3>&1 1>&2 2>&3)
+# fi
+
 
 dialog_install(){
     if command -v "whiptail" &> /dev/null
@@ -33,21 +43,21 @@ app_install(){
 wego() {
     {
         echo 0
-        app_install golang-go
-        echo 30
-        export GOPATH=/home/user/gocode #test it sudo?
-        echo 35
-        go install github.com/schachmat/wego@latest
-        echo 45
-        /home/user/gocode/bin/wego
-        echo 50
-        API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
-        sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/user/.wegorc
-        sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/user/.wegorc
-        sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/user/.wegorc
-        sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/user/.wegorc
-        echo 100
-        /home/user/gocode/bin/wego
+        # app_install golang-go
+        # echo 30
+        # export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
+        # echo 35
+        # go install github.com/schachmat/wego@latest
+        # echo 45
+        # /home/"$USERNAME"/gocode/bin/wego
+        # echo 50
+        # API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
+        # sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
+        # sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
+        # sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
+        # sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
+        # echo 100
+        # /home/"$USERNAME"/gocode/bin/wego
     } | whiptail --gauge "Please wait while installing" 6 60 0
 
     menu
@@ -114,7 +124,7 @@ startup(){
 
     if command -v "go" &> /dev/null
     then
-        sudo echo '/home/user/gocode/bin/wego' >> /etc/profile.d/startup.sh
+        sudo echo '/home/"$USERNAME"/gocode/bin/wego' >> /etc/profile.d/startup.sh
     fi
 
     if ! command -v "neofetch" &> /dev/null
@@ -158,13 +168,14 @@ progress(){
         i=$((i + 1))
         sleep 2
     done | whiptail --title "Auto install" --gauge "Preparing install..." 10 60 0
-# array_one=( "Installing nala..." "Installing wego..." )
-# array_two=( "echo 'clear22' >> \"$BASEDIR\"/test.txt" "echo 'clear2332' >> \"$BASEDIR\"/test.txt" )
-# progress \
-#   "${#array_one[@]}" "${array_one[@]}" \
-#   "${#array_two[@]}" "${array_two[@]}"   
+    # array_one=( "Installing nala..." "Installing wego..." )
+    # array_two=( "echo 'clear22' >> \"$BASEDIR\"/test.txt" "echo 'clear2332' >> \"$BASEDIR\"/test.txt" )
+    # progress \
+    #   "${#array_one[@]}" "${array_one[@]}" \
+    #   "${#array_two[@]}" "${array_two[@]}"   
 }
 
+# old method
 autoinstall(){
     msgs=("Installing nala..."
         "Installing wego..."
@@ -215,21 +226,21 @@ edge(){
 
 neofetch(){
     app_install neofetch
-    sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/cpu_display="off"/cpu_display="infobar"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/disk_subtitle="mount"/disk_subtitle="dir"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i "s/disk_show=('\/')/disk_show=('\/' '\/dev\/sda3')/" /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/de_version="on"/de_version="off"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/cpu_temp="off"/cpu_temp="C"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/speed_shorthand="off"/speed_shorthand="on"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/memory_unit="mib"/memory_unit="gib"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/memory_percent="off"/memory_percent="on"/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/info cols/\# info cols/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/\# info "Public IP" public_ip/info "Public IP" public_ip/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/\# info "Local IP" local_ip/info "Local IP" local_ip/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/\# info "Disk" disk/info "Disk" disk/' /home/user/.config/neofetch/config.conf
-    sudo sed -i 's/info "Packages" packages/\# info "Packages" packages/' /home/user/.config/neofetch/config.conf
+    sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/cpu_display="off"/cpu_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/disk_subtitle="mount"/disk_subtitle="dir"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i "s/disk_show=('\/')/disk_show=('\/' '\/dev\/sda3')/" /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/de_version="on"/de_version="off"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/cpu_temp="off"/cpu_temp="C"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/speed_shorthand="off"/speed_shorthand="on"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/memory_unit="mib"/memory_unit="gib"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/memory_percent="off"/memory_percent="on"/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/info cols/\# info cols/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/\# info "Public IP" public_ip/info "Public IP" public_ip/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/\# info "Local IP" local_ip/info "Local IP" local_ip/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/\# info "Disk" disk/info "Disk" disk/' /home/"$USERNAME"/.config/neofetch/config.conf
+    sudo sed -i 's/info "Packages" packages/\# info "Packages" packages/' /home/"$USERNAME"/.config/neofetch/config.conf
     menu
 }
 
@@ -247,13 +258,13 @@ lsd(){
         wget https://github.com/Peltoche/lsd/releases/download/0.22.0/lsd_0.22.0_amd64.deb
         sudo dpkg -i lsd_0.22.0_amd64.deb
         rm -R lsd_0.22.0_amd64.deb
-        if ! grep -Fxq "alias ls='lsd -l'" /home/user/.bashrc
+        if ! grep -Fxq "alias ls='lsd -l'" /home/"$USERNAME"/.bashrc
         then
-            sudo sed -i "s/\# some more ls aliases/\# some more ls aliases\nalias ls='lsd -l'/" /home/user/.bashrc
+            sudo sed -i "s/\# some more ls aliases/\# some more ls aliases\nalias ls='lsd -l'/" /home/"$USERNAME"/.bashrc
         fi
     fi
 
-    FILE=/home/user/.config/lsd
+    FILE=/home/"$USERNAME"/.config/lsd
     if test -f "$FILE"/config.yaml;
     then
         echo "$FILE exists."
@@ -274,16 +285,16 @@ lsd(){
 
     cp "$BASEDIR"/LSD_config.yaml "$FILE"/config.yaml
 
-    if [ ! -d /home/user/.local/share/fonts/ ];
+    if [ ! -d /home/"$USERNAME"/.local/share/fonts/ ];
     then
-        mkdir -p /home/user/.local/share/fonts
+        mkdir -p /home/"$USERNAME"/.local/share/fonts
     fi
 
-    if [ ! -f /home/user/.local/share/fonts/Hack\ Regular\ Nerd\ Font\ Complete.ttf ];
+    if [ ! -f /home/"$USERNAME"/.local/share/fonts/Hack\ Regular\ Nerd\ Font\ Complete.ttf ];
     then
-        mkdir -p /home/user/.local/share/fonts
+        mkdir -p /home/"$USERNAME"/.local/share/fonts
         wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
-        mv Hack\ Regular\ Nerd\ Font\ Complete.ttf /home/user/.local/share/fonts/Hack\ Regular\ Nerd\ Font\ Complete.ttf
+        mv Hack\ Regular\ Nerd\ Font\ Complete.ttf /home/"$USERNAME"/.local/share/fonts/Hack\ Regular\ Nerd\ Font\ Complete.ttf
         fc-cache -fv
         echo "done!"
     else
@@ -292,13 +303,13 @@ lsd(){
         if [[ $REPLY =~ ^[Yy]$ ]]
         then
             wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
-            mv Hack\ Regular\ Nerd\ Font\ Complete.ttf /home/user/.local/share/fonts/Hack\ Regular\ Nerd\ Font\ Complete.ttf
+            mv Hack\ Regular\ Nerd\ Font\ Complete.ttf /home/"$USERNAME"/.local/share/fonts/Hack\ Regular\ Nerd\ Font\ Complete.ttf
             fc-cache -fv
             echo "done!"
         fi
     fi
 
-    #cd /home/user/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+    #cd /home/"$USERNAME"/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
     menu
 
 }
@@ -313,19 +324,67 @@ _update(){
     fi
     menu
 }
-makesomething(){
-    echo "start"
-    echo 'clear' > "$BASEDIR"/test.txt
-    echo "done"
+
+c_autoinstall(){
+    STEP_LIST=(
+        'wego' 'wego (Terminal weather)'
+        'neofetch' 'neofetch (Shows Linux System Information)'
+        'supervisor' 'Supervisor (System for controlling process state)'
+        'nala_install' 'nala (APT package manager)'
+        'edge' 'DE Microsoft Edge'
+        'app_install lolcat' 'lolcat (colored text)'
+        'app_install figlet' 'figlet (ascii art text)'
+        'app_install ncdu' 'ncdu (disk usage viewer)'
+        'app_install ranger' 'ranger (Console File Manager with VI Key Bindings)'
+        'app_install bpytop' 'bpytop (Resource monitor)'
+        'lsd' 'lsd (File manager)'
+        'startup' 'Create a startup file (neofetch and wego)'
+    )
+
+    entry_options=()
+    entries_count=${#STEP_LIST[@]} 
+    entries_count=$(($entries_count / 2))
+    message='Optional programs for installation.'
+
+    for i in ${!STEP_LIST[@]}; do
+        if [ $((i % 2)) == 0 ]; then
+            entry_options+=($(($i / 2)))
+            entry_options+=("${STEP_LIST[$(($i + 1))]}")
+            entry_options+=('OFF')
+        fi
+    done
+    
+    SELECTED_STEPS_RAW=$(
+        whiptail \
+            --checklist \
+            --separate-output \
+            --title 'Setup' \
+            "$message" \
+            25 70\
+            16 -- "${entry_options[@]}"\
+            3>&1 1>&2 2>&3
+    )
+    #"$entries_count" -- "${entry_options[@]}"\
+    if [[ ! -z SELECTED_STEPS_RAW ]]; then
+        for STEP_FN_ID in ${SELECTED_STEPS_RAW[@]}; do
+            FN_NAME_ID=$(($STEP_FN_ID * 2))
+            STEP_FN_NAME="${STEP_LIST[$FN_NAME_ID]}"
+            echo "---Running ${STEP_FN_NAME}---"
+            $STEP_FN_NAME
+        done
+    fi
+    menu
 }
+
+
 menu(){
-    OPTION=$(whiptail --title "Matteo ubuntu installer tool" --menu "Choose your option" 25 85 16 \
-    "1" "Auto install (nala, wego, neofetch, startup setup, supervisor, upgrade)" \
-    "2" "Install nala" \
+    OPTION=$(whiptail --title "$USERNAME"@"$HOSTNAME" --menu "" 25 70 16 \
+    "1" "Selectable bulk install" \
+    "2" "Install nala (APT package manager)" \
     "3" "Install wego (terminal weather)" \
-    "4" "Install Supervisor" \
+    "4" "Install Supervisor (System for controlling process state)" \
     "5" "Install DE Microsoft Edge" \
-    "6" "Install neofetch" \
+    "6" "Install neofetch (Shows Linux System Information)" \
     "7" "Install lolcat (colored text)" \
     "8" "Install figlet (ascii art text)" \
     "9" "Install ncdu (disk usage viewer)" \
@@ -340,7 +399,7 @@ menu(){
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         case $OPTION in
-            1) autoinstall;;
+            1) c_autoinstall;;
             2) nala_install;;
             3) wego;;
             4) supervisor;;
@@ -357,9 +416,13 @@ menu(){
             15) _update;;
         esac
     else
-        clear
+        echo
+        #clear
     fi
 }
 
 dialog_install
 menu
+
+
+

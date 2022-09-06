@@ -5,6 +5,8 @@
 Color_Off='\033[0m'       # Text Reset
 On_Red='\033[41m'         # Red
 
+t=$(mktemp);
+
 
 BASEDIR=$(dirname "$0")
 USERNAME="$SUDO_USER"
@@ -34,6 +36,8 @@ app_install(){
     app=$1
     if command -v "nala" &> /dev/null
     then
+        #whiptail --textbox /dev/stdin 40 80 <<<"$(sudo nala install "$app" -y)"
+        # sudo nala install "$app" -y > $t; whiptail --msgbox $t 40 80
         sudo nala install "$app" -y
     else
         sudo apt -y install "$app"
@@ -41,24 +45,33 @@ app_install(){
 }
 
 wego() {
-    {
-        app_install golang-go
-        echo 30
-        export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
-        echo 35
-        go install github.com/schachmat/wego@latest
-        echo 45
-        /home/"$USERNAME"/gocode/bin/wego
-        echo 50
-        API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
-        sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
-        sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
-        sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
-        sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
-        echo 100
-        /home/"$USERNAME"/gocode/bin/wego
-    } | whiptail --gauge "Please wait while installing" 6 60 0
-
+    # {
+    #     app_install golang-go
+    #     echo 30
+    #     export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
+    #     echo 35
+    #     go install github.com/schachmat/wego@latest
+    #     echo 45
+    #     /home/"$USERNAME"/gocode/bin/wego
+    #     echo 50
+    #     API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
+    #     sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
+    #     sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
+    #     sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
+    #     sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
+    #     echo 100
+    #     /home/"$USERNAME"/gocode/bin/wego
+    # } | whiptail --gauge "Please wait while installing" 6 60 0
+    app_install golang-go
+    export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
+    go install github.com/schachmat/wego@latest
+    /home/"$USERNAME"/gocode/bin/wego
+    API=$(whiptail --title "OpenWeather API" --inputbox "Please insert your OW API key?" 10 60 3>&1 1>&2 2>&3)
+    sudo sed -i 's/location=40.748,-73.985/location=Dorog/' /home/"$USERNAME"/.wegorc
+    sudo sed -i "s/owm-api-key=/owm-api-key=$API/" /home/"$USERNAME"/.wegorc
+    sudo sed -i 's/backend=forecast.io/backend=openweathermap/' /home/"$USERNAME"/.wegorc
+    sudo sed -i 's/owm-lang=en/owm-lang=hu/' /home/"$USERNAME"/.wegorc
+    /home/"$USERNAME"/gocode/bin/wego
     menu
 }
 
@@ -132,7 +145,7 @@ startup(){
         echo    # (optional) move to a new line
         if [[ $REPLY =~ ^[Yy]$ ]]
         then
-            neofetch
+            install_neofetch
             sudo echo 'neofetch' >> /etc/profile.d/startup.sh
         fi
     else
@@ -184,7 +197,7 @@ autoinstall(){
         )
     commands=("nala_install"
             "wego"
-            "neofetch"
+            "install_neofetch"
             "supervisor"
             "startup"
             )
@@ -223,8 +236,9 @@ edge(){
     menu
 }
 
-neofetch(){
+install_neofetch(){
     app_install neofetch
+    neofetch
     sudo sed -i 's/disk_display="off"/disk_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
     sudo sed -i 's/memory_display="off"/memory_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
     sudo sed -i 's/cpu_display="off"/cpu_display="infobar"/' /home/"$USERNAME"/.config/neofetch/config.conf
@@ -252,8 +266,9 @@ ascii(){
 
 lsd(){
     # sudo nala fonts-hack-ttf
-    if ! command -v "lsd" &> /dev/null
-    then
+    # if ! command -v "lsd" &> /dev/null
+    # then
+        echo "install LSD"
         wget https://github.com/Peltoche/lsd/releases/download/0.22.0/lsd_0.22.0_amd64.deb
         sudo dpkg -i lsd_0.22.0_amd64.deb
         rm -R lsd_0.22.0_amd64.deb
@@ -261,7 +276,7 @@ lsd(){
         then
             sudo sed -i "s/\# some more ls aliases/\# some more ls aliases\nalias ls='lsd -l'/" /home/"$USERNAME"/.bashrc
         fi
-    fi
+    # fi
 
     FILE=/home/"$USERNAME"/.config/lsd
     if test -f "$FILE"/config.yaml;
@@ -403,12 +418,12 @@ menu(){
             3) wego;;
             4) supervisor;;
             5) edge;;
-            6) neofetch;;
-            7) app_install lolcat;;
-            8) app_install figlet;;
-            9) app_install ncdu;;
-            10) app_install ranger;;
-            11) app_install bpytop;;
+            6) install_neofetch;;
+            7) app_install lolcat; menu;;
+            8) app_install figlet; menu;;
+            9) app_install ncdu; menu;;
+            10) app_install ranger; menu;;
+            11) app_install bpytop; menu;;
             12) lsd;;
             13) startup;;
             14) update_upgrade;;
@@ -422,6 +437,5 @@ menu(){
 
 dialog_install
 menu
-
 
 

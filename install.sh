@@ -1,7 +1,7 @@
 #!/bin/bash
 # https://www.xmodulo.com/create-dialog-boxes-interactive-shell-script.html
 # https://pagure.io/newt/blob/master/f/whiptail.c#_360
-
+# https://caffeinedev.medium.com/customize-your-terminal-oh-my-zsh-on-ubuntu-18-04-lts-a9b11b63f2
 Color_Off='\033[0m'       # Text Reset
 On_Red='\033[41m'         # Red
 

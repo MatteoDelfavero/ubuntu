@@ -54,11 +54,10 @@ zsh_install(){
     apt_install powerline 0
     apt_install fonts-powerline 0
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+    # cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+    cp .zshrc ~/.zshrc
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
     
-    # config file change
-
     chsh -s /bin/zsh
     if [ "$1" -eq 1 ]; then
         menu

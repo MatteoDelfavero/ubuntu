@@ -49,6 +49,22 @@ app_install(){
     fi
 }
 
+zsh_install(){
+    app_install zsh 0
+    apt_install powerline 0
+    apt_install fonts-powerline 0
+    git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+    
+    # config file change
+
+    chsh -s /bin/zsh
+    if [ "$1" -eq 1 ]; then
+        menu
+    fi
+}
+
 wego() {
         app_install golang-go 0
         export GOPATH=/home/"$USERNAME"/gocode #test it sudo?
@@ -392,9 +408,10 @@ menu(){
     "11" "Install bpytop (Resource monitor)" \
     "12" "Install lsd (File manager)" \
     "13" "Midnight Commander (File manager)" \
-    "14" "Create a startup file (neofetch and wego)" \
-    "15" "Update and upgrade" \
-    "16" "Update" \
+    "14" "Oh My Zsh (terminal)" \
+    "15" "Create a startup file (neofetch and wego)" \
+    "16" "Update and upgrade" \
+    "17" "Update" \
     3>&1 1>&2 2>&3)
 
     exitstatus=$?
@@ -413,9 +430,10 @@ menu(){
             11) app_install bpytop 1;;
             12) lsd_install 1;;
             13) app_install mc 1;;
-            14) startup 1;;
-            15) update_upgrade;;
-            16) _update;;
+            14) zsh_install 1;;
+            15) startup 1;;
+            16) update_upgrade;;
+            17) _update;;
         esac
     else
         echo

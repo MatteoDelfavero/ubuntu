@@ -6,11 +6,11 @@ Color_Off='\033[0m'       # Text Reset
 On_Red='\033[41m'         # Red
 
 sudo echo Hello
-if [ "$EUID" -eq 0 ];
-then
-  whiptail --title "Root privilage" --msgbox "Please do not start the program with root privileges." 8 78
-  exit
-fi
+#if [ "$EUID" -eq 0 ];
+#then
+#  whiptail --title "Root privilage" --msgbox "Please do not start the program with root privileges." 8 78
+#  exit
+#fi
 
 BASEDIR=$(dirname "$0")
 USERNAME="$USER"

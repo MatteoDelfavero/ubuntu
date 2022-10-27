@@ -114,7 +114,7 @@ update(){
     then
         sudo nala update
     else
-        sudp apt update
+        sudo apt update
     fi  
     menu
 }
